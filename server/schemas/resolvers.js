@@ -44,8 +44,19 @@ const resolvers ={
                 );
                 return updatedUser;
             }
-        }
+        },
 
-        removeBook
-    }
-}
+        removeBook: async (parent, { bookId }, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { savedBooks: { bookId: params.bookId } } },
+                    { new: true }
+                );
+                return updatedUser;
+            }
+        },
+    },
+};
+
+module.exports = resolvers;
