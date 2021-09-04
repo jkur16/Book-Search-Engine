@@ -2,7 +2,12 @@ const { Book, User } = require('../models');
 
 const resolvers ={
     Query: {
-        me: async ()
+        me: async (parent, args, context) => {
+            if (context.user) {
+              return Profile.findOne({ _id: context.user._id });
+            }
+            throw new AuthenticationError('You need to be logged in!');
+          },
     },
 
     Mutation: {
@@ -21,6 +26,26 @@ const resolvers ={
       
             const token = signToken(profile);
             return { token, profile };
+        },
+
+        addUser: async (parent, { username, email, password }) => {
+            const user = await User.create({ username, email, password });
+            const token = signToken(profile);
+      
+            return { token, profile };
           },
+
+        saveBook: async (parent, { body }, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    { $addToSet: {savedBooks: body}},
+                    {new: true}
+                );
+                return updatedUser;
+            }
+        }
+
+        removeBook
     }
 }
