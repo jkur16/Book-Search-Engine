@@ -10,7 +10,7 @@ import { useMutation, useQuery } from '@apollo/client';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
-  const [removeBook, {error}] = useMutation(REMOVE_BOOK)
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK)
 
   // use this to determine if `useEffect()` hook needs to run again
   const userData = data?.me || []
@@ -25,20 +25,15 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
-      const {data} = await removeBook({
-        variables: {bookId: bookId}
-      });
-
+      await deleteBook({ variables: {bookId: bookId} });
       removeBookId(bookId);
-
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   // if data isn't here yet, say so
-  if (!loading) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 
