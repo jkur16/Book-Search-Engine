@@ -1,10 +1,12 @@
 const { Book, User } = require('../models');
+const { AuthenticationError} = require('apollo-server-express')
+const { signToken } = require('../utils/auth')
 
 const resolvers ={
     Query: {
         me: async (parent, args, context) => {
             if (context.user) {
-              return Profile.findOne({ _id: context.user._id });
+              return User.findOne({ _id: context.user._id });
             }
             throw new AuthenticationError('You need to be logged in!');
           },
@@ -12,7 +14,7 @@ const resolvers ={
 
     Mutation: {
         login: async (parent, { email, password }) => {
-            const profile = await Profile.findOne({ email });
+            const profile = await User.findOne({ email });
       
             if (!profile) {
               throw new AuthenticationError('No profile with this email found!');
@@ -32,7 +34,7 @@ const resolvers ={
             const user = await User.create({ username, email, password });
             const token = signToken(profile);
       
-            return { token, profile };
+            return { token, user };
           },
 
         saveBook: async (parent, { body }, context) => {
