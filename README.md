@@ -3,7 +3,7 @@
 ## Table of Contents
 * [Description](#Description)
 * [Technology](#Technology)
-* [Screenshots](#Screenshots)
+* [Screenshot](#Screenshot)
 * [Live Site](#Live_Site)
 * [License](#License)
 * [Contact](#Contact)
@@ -20,8 +20,10 @@ This project refactors a Google Books API search engine from a RESTful API to a 
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
-## Screenshots
+## Screenshot
+![screenshot](/client/public/book-search-engine2.jpg)
 ## Live Site
+[You can visit the live site here](https://gentle-inlet-48109.herokuapp.com/)
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Contact
